@@ -135,6 +135,17 @@
   margin-top: 0.5rem;
 }
 
+.imageSource a {
+  color: var(--gold);
+  text-decoration: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: var(--gold2);
+    text-decoration: underline;
+  }
+}
+
 .facts ul {
   list-style: none;
   padding: 0;

@@ -148,14 +148,50 @@ export default function PeopleCards() {
   const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Анимация появления карточек с эффектом каскада
     anime({
       targets: `.${styles.card}`,
       opacity: [0, 1],
-      translateY: [50, 0],
-      delay: anime.stagger(150, { start: 500 }),
-      duration: 1000,
+      translateY: [80, 0],
+      scale: [0.9, 1],
+      delay: anime.stagger(200, { start: 300 }),
+      duration: 1200,
       easing: "easeOutExpo",
     });
+
+    // Анимация баннеров с эффектом "волны"
+    anime({
+      targets: `.${styles.cardBanner}`,
+      translateY: [20, 0],
+      opacity: [0, 1],
+      delay: anime.stagger(150, { start: 500 }),
+      duration: 1000,
+      easing: "easeOutQuad",
+    });
+
+    // Параллакс-эффект при движении мыши
+    const handleMouseMove = (e: MouseEvent) => {
+      const cards = document.querySelectorAll(`.${styles.card}`);
+      const mouseX = e.clientX / window.innerWidth - 0.5;
+      const mouseY = e.clientY / window.innerHeight - 0.5;
+
+      cards.forEach((card, index) => {
+        const factor = (index % 2 === 0 ? 1 : -1) * 8;
+        anime({
+          targets: card,
+          translateX: mouseX * factor,
+          translateY: mouseY * factor,
+          duration: 800,
+          easing: "easeOutQuad",
+        });
+      });
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   return (
@@ -171,13 +207,8 @@ export default function PeopleCards() {
       </div>
 
       <div ref={cardsRef} className={styles.cardsGrid}>
-        {peoples.map((person, index) => (
-          <Link
-            key={person.id}
-            href={person.link}
-            className={styles.card}
-            style={{ "--delay": `${index * 0.1}s` } as React.CSSProperties}
-          >
+        {peoples.map((person) => (
+          <Link key={person.id} href={person.link} className={styles.card}>
             <div className={styles.cardBanner}>
               <div className={styles.cardImagePlaceholder}>
                 <span>{person.name[0]}</span>

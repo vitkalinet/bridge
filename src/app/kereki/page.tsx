@@ -75,9 +75,6 @@ export default function KerekiPage() {
                   alt="Кереки — народ Чукотки"
                   className={styles.mediaImage}
                 />
-                <span className={styles.imageSource}>
-                  Изображение: авторский дизайн
-                </span>
               </div>
             </div>
 

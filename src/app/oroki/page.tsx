@@ -78,9 +78,6 @@ export default function OrokiPage() {
                   alt="Ороки — олений народ Сахалина"
                   className={styles.mediaImage}
                 />
-                <span className={styles.imageSource}>
-                  Изображение: авторский дизайн
-                </span>
               </div>
             </div>
 

@@ -79,9 +79,6 @@ export default function ChamalalyPage() {
                   alt="Чамалалы — горные люди Кавказа"
                   className={styles.mediaImage}
                 />
-                <span className={styles.imageSource}>
-                  Изображение: авторский дизайн
-                </span>
               </div>
             </div>
 

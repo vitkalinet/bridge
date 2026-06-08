@@ -77,9 +77,6 @@ export default function TazyPage() {
                   alt="Тазы — синкретичный народ Приморья"
                   className={styles.mediaImage}
                 />
-                <span className={styles.imageSource}>
-                  Изображение: авторский дизайн
-                </span>
               </div>
             </div>
 
