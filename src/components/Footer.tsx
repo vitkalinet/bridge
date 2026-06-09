@@ -46,15 +46,15 @@ export default function Footer() {
           Атлас КМНС
         </a>
         <a
-          href="https://tochno.st/datasets/allsettlements"
+          href="https://rosstat.gov.ru/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Данные переписи 2021
+          Данные переписи из Росстата
         </a>
       </div>
       <div className={styles.footerCopy}>
-        © 2025 Культурный мост. Создано с уважением к культурному наследию.
+        © 2026 Культурный мост. Создано с уважением к культурному наследию.
       </div>
     </footer>
   );

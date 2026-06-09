@@ -195,7 +195,7 @@ export default function NationPageClient() {
             <div className={`${styles.contentBlock} ${styles.media}`}>
               <div className={styles.imageContainer}>
                 <img
-                  src={`/images/${nationId}/photo.svg`}
+                  src={`/images/${nationId}/${nationId}.jpg`}
                   alt={`${data.header.title} — ${data.header.epigraph}`}
                   className={styles.mediaImage}
                 />

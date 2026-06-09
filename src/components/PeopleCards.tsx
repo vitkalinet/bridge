@@ -32,7 +32,7 @@ const peoples: Person[] = getAllNations().map((nation) => ({
   population: nation.population,
   language: "См. страницу народа",
   belief: "См. страницу народа",
-  photo: `/images/${nation.id}/photo.svg`,
+  photo: `/images/${nation.id}/${nation.id}.jpg`,
   description: nation.epigraph,
   facts: [],
   beliefs: "",
@@ -106,9 +106,7 @@ export default function PeopleCards() {
         {peoples.map((person) => (
           <Link key={person.id} href={person.link} className={styles.card}>
             <div className={styles.cardBanner}>
-              <div className={styles.cardImagePlaceholder}>
-                <span>{person.name[0]}</span>
-              </div>
+              <img src={person.photo} alt={person.name} />
               <div className={styles.cardBannerOverlay}></div>
             </div>
             <div className={styles.cardBody}>
