@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import anime from "animejs";
 import Link from "next/link";
@@ -15,6 +15,8 @@ export default function NationPageClient() {
   const contentRef = useRef<HTMLDivElement>(null);
   const nationId = params.nationId as string;
   const data = getNationPageData(nationId);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [activeSection, setActiveSection] = useState("legend");
 
   useEffect(() => {
     anime({
@@ -26,6 +28,37 @@ export default function NationPageClient() {
       easing: "easeOutExpo",
     });
   }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-20% 0px -60% 0px",
+        threshold: 0,
+      },
+    );
+
+    document.querySelectorAll<HTMLElement>("[data-section]").forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   if (!data) {
     return (
@@ -51,10 +84,49 @@ export default function NationPageClient() {
     return value && value.description && value.description.trim() !== "";
   };
 
+  const sections = [
+    { id: "legend", label: "Предисловие" },
+    { id: "geography", label: "География" },
+    { id: "population", label: "Население" },
+    { id: "language", label: "Язык" },
+    { id: "traditions", label: "Традиции" },
+    { id: "clothing", label: "Одежда" },
+    { id: "dwelling", label: "Жилище" },
+    { id: "beliefs", label: "Верования" },
+    { id: "media", label: "Фото" },
+    { id: "sources", label: "Источники" },
+  ];
+
   return (
     <>
       <Navigation />
-      <main className={styles.page}>
+      <button
+        className={`${styles.sidebarToggle} ${isSidebarOpen ? styles.open : ""}`}
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        {isSidebarOpen ? "◀" : "▶"}
+      </button>
+      <aside
+        className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ""}`}
+      >
+        <div className={styles.sidebarHeader}>
+          <h3>Разделы</h3>
+        </div>
+        <nav className={styles.sidebarNav}>
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              className={`${styles.sidebarLink} ${activeSection === section.id ? styles.active : ""}`}
+              onClick={() => scrollToSection(section.id)}
+            >
+              {section.label}
+            </button>
+          ))}
+        </nav>
+      </aside>
+      <main
+        className={`${styles.page} ${isSidebarOpen ? styles.withSidebar : ""}`}
+      >
         <div className={styles.container}>
           <div className={styles.header}>
             <span className={styles.region}>{data.header.region}</span>
@@ -84,12 +156,19 @@ export default function NationPageClient() {
           </div>
 
           <div ref={contentRef} className={styles.content}>
-            <div className={`${styles.contentBlock} ${styles.legend}`}>
+            <div
+              className={`${styles.contentBlock} ${styles.legend}`}
+              data-section
+            >
               <h2>{data.legend.title}</h2>
               <p>{data.legend.content}</p>
             </div>
 
-            <div className={`${styles.contentBlock} ${styles.geography}`}>
+            <div
+              className={`${styles.contentBlock} ${styles.geography}`}
+              data-section
+              id="geography"
+            >
               <h2>{data.geography.title}</h2>
               <ul>
                 {data.geography.items.map((item, index) => (
@@ -101,7 +180,11 @@ export default function NationPageClient() {
               <GallerySection nationId={nationId} section="geog" />
             </div>
 
-            <div className={`${styles.contentBlock} ${styles.population}`}>
+            <div
+              className={`${styles.contentBlock} ${styles.population}`}
+              data-section
+              id="population"
+            >
               <h2>{data.population.title}</h2>
               <div className={styles.populationTable}>
                 <table>
@@ -126,7 +209,11 @@ export default function NationPageClient() {
               </p>
             </div>
 
-            <div className={`${styles.contentBlock} ${styles.language}`}>
+            <div
+              className={`${styles.contentBlock} ${styles.language}`}
+              data-section
+              id="language"
+            >
               <h2>{data.language.title}</h2>
               <ul>
                 {data.language.items.map((item, index) => (
@@ -138,7 +225,11 @@ export default function NationPageClient() {
               <GallerySection nationId={nationId} section="lang" />
             </div>
 
-            <div className={`${styles.contentBlock} ${styles.traditions}`}>
+            <div
+              className={`${styles.contentBlock} ${styles.traditions}`}
+              data-section
+              id="traditions"
+            >
               <h2>{data.traditions.title}</h2>
               {data.traditions.items.map((item, index) => (
                 <div key={index} className={styles.traditionItem}>
@@ -149,7 +240,11 @@ export default function NationPageClient() {
               <GallerySection nationId={nationId} section="trad" />
             </div>
 
-            <div className={`${styles.contentBlock} ${styles.clothing}`}>
+            <div
+              className={`${styles.contentBlock} ${styles.clothing}`}
+              data-section
+              id="clothing"
+            >
               <h2>{data.clothing.title}</h2>
               {hasContent("male") && (
                 <div className={styles.clothingItem}>
@@ -175,7 +270,11 @@ export default function NationPageClient() {
               )}
             </div>
 
-            <div className={`${styles.contentBlock} ${styles.dwelling}`}>
+            <div
+              className={`${styles.contentBlock} ${styles.dwelling}`}
+              data-section
+              id="dwelling"
+            >
               <h2>{data.dwelling.title}</h2>
               {data.dwelling.items.map((item, index) => (
                 <div key={index} className={styles.dwellingItem}>
@@ -186,13 +285,21 @@ export default function NationPageClient() {
               <GallerySection nationId={nationId} section="dwell" />
             </div>
 
-            <div className={`${styles.contentBlock} ${styles.beliefs}`}>
+            <div
+              className={`${styles.contentBlock} ${styles.beliefs}`}
+              data-section
+              id="beliefs"
+            >
               <h2>{data.beliefs.title}</h2>
               <p dangerouslySetInnerHTML={{ __html: data.beliefs.content }} />
               <GallerySection nationId={nationId} section="belief" />
             </div>
 
-            <div className={`${styles.contentBlock} ${styles.media}`}>
+            <div
+              className={`${styles.contentBlock} ${styles.media}`}
+              data-section
+              id="media"
+            >
               <div className={styles.imageContainer}>
                 <img
                   src={`/images/${nationId}/${nationId}.jpg`}
@@ -202,7 +309,11 @@ export default function NationPageClient() {
               </div>
             </div>
 
-            <div className={`${styles.contentBlock} ${styles.sources}`}>
+            <div
+              className={`${styles.contentBlock} ${styles.sources}`}
+              data-section
+              id="sources"
+            >
               <h2>{data.sources.title}</h2>
               <ul>
                 {data.sources.items.map((source, index) => (

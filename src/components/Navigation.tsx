@@ -29,6 +29,7 @@ export default function Navigation() {
   return (
     <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
       <Link href="/" className={styles.navLogo}>
+        <span className={styles.navLogoSymbol}>᳁</span>
         Культурный мост
       </Link>
       <div className={styles.navActions}>
