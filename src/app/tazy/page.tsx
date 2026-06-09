@@ -6,10 +6,12 @@ import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import GallerySection from "@/components/GallerySection";
+import { getNationPageData } from "@/data/nationsPages";
 import styles from "./TazyPage.module.scss";
 
 export default function TazyPage() {
   const contentRef = useRef<HTMLDivElement>(null);
+  const data = getNationPageData("tazy");
 
   useEffect(() => {
     anime({
@@ -22,31 +24,35 @@ export default function TazyPage() {
     });
   }, []);
 
+  if (!data) return null;
+
   return (
     <>
       <Navigation />
       <main className={styles.page}>
         <div className={styles.container}>
           <div className={styles.header}>
-            <span className={styles.region}>Приморский край</span>
-            <h1 className={styles.title}>Тазы</h1>
-            <p className={styles.native}>Таза — «чистый, свежий»</p>
-            <p className={styles.epigraph}>Дети тайги и Поднебесной</p>
+            <span className={styles.region}>{data.header.region}</span>
+            <h1 className={styles.title}>{data.header.title}</h1>
+            <p className={styles.native}>{data.header.native}</p>
+            <p className={styles.epigraph}>{data.header.epigraph}</p>
             <div className={styles.stats}>
               <div className={styles.statItem}>
                 <span className={styles.statLabel}>Численность (2020)</span>
-                <span className={styles.statValue}>235 чел.</span>
+                <span className={styles.statValue}>
+                  {data.header.stats.population}
+                </span>
               </div>
               <div className={styles.statItem}>
                 <span className={styles.statLabel}>Язык</span>
                 <span className={styles.statValue}>
-                  Тунгусо-маньчжурский (на грани исчезновения)
+                  {data.header.stats.language}
                 </span>
               </div>
               <div className={styles.statItem}>
                 <span className={styles.statLabel}>Верования</span>
                 <span className={styles.statValue}>
-                  Шаманизм + даосизм + культ тигра
+                  {data.header.stats.belief}
                 </span>
               </div>
             </div>
@@ -54,39 +60,24 @@ export default function TazyPage() {
 
           <div ref={contentRef} className={styles.content}>
             <div className={`${styles.contentBlock} ${styles.legend}`}>
-              <h2>Легенда народа</h2>
-              <p>
-                Тазы (самоназвание — <em>таза</em>, от китайского 塔子 —
-                «чистый, свежий») — один из самых молодых этносов России.
-                Легенды тазов рассказывают о том, как в XIX веке на Дальнем
-                Востоке встретились и смешались коренные удэгейцы и нанайцы с
-                китайскими и маньчжурскими переселенцами. Китайские старатели
-                вступали в браки с местными женщинами, и так родился народ,
-                впитавший культуру тайги и цивилизацию Поднебесной. В советский
-                период тазы подверглись репрессиям как «китайские шпионы», что
-                привело к сокрытию этничности и утрате языка во многих семьях.
-              </p>
+              <h2>{data.legend.title}</h2>
+              <p>{data.legend.content}</p>
             </div>
 
             <div className={`${styles.contentBlock} ${styles.geography}`}>
-              <h2>География проживания</h2>
+              <h2>{data.geography.title}</h2>
               <ul>
-                <li>
-                  <strong>Регионы:</strong> Приморский край
-                </li>
-                <li>
-                  <strong>Населённые пункты:</strong> Михайловка, Пермское,
-                  Дальнегорск
-                </li>
-                <li>
-                  <strong>Тип расселения:</strong> оседлое
-                </li>
+                {data.geography.items.map((item, index) => (
+                  <li key={index}>
+                    <strong>{item.label}:</strong> {item.value}
+                  </li>
+                ))}
               </ul>
               <GallerySection nationId="tazy" section="geog" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.population}`}>
-              <h2>Динамика численности</h2>
+              <h2>{data.population.title}</h2>
               <div className={styles.populationTable}>
                 <table>
                   <thead>
@@ -96,148 +87,79 @@ export default function TazyPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>2010</td>
-                      <td>274 чел.</td>
-                    </tr>
-                    <tr>
-                      <td>2020</td>
-                      <td>235 чел.</td>
-                    </tr>
+                    {data.population.table.map((row, index) => (
+                      <tr key={index}>
+                        <td>{row.year}</td>
+                        <td>{row.value}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
               <p className={styles.populationComment}>
-                Численность тазов сократилась на 39 человек. Это единственный
-                народ в данной пятерке, показывающий устойчивую отрицательную
-                динамику. Снижение связано с ассимиляцией, оттоком молодежи в
-                города и утратой языковой идентичности.
+                {data.population.comment}
               </p>
             </div>
 
             <div className={`${styles.contentBlock} ${styles.language}`}>
-              <h2>Язык и современное положение</h2>
+              <h2>{data.language.title}</h2>
               <ul>
-                <li>
-                  <strong>Языковая семья:</strong> тунгусо-маньчжурская группа
-                  (удэгейский диалект)
-                </li>
-                <li>
-                  <strong>Письменность:</strong> бесписьменный (при фиксации —
-                  кириллица)
-                </li>
-                <li>
-                  <strong>Статус ЮНЕСКО:</strong> на грани исчезновения
-                </li>
-                <li>
-                  <strong>Носители:</strong> 20–30 человек (пожилые)
-                </li>
-                <li>
-                  <strong>Современный язык:</strong> русский, китайский
-                </li>
-                <li>
-                  <strong>Меры поддержки:</strong> единичные этнографические
-                  записи
-                </li>
+                {data.language.items.map((item, index) => (
+                  <li key={index}>
+                    <strong>{item.label}:</strong> {item.value}
+                  </li>
+                ))}
               </ul>
               <GallerySection nationId="tazy" section="lang" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.traditions}`}>
-              <h2>Традиции и ремёсла</h2>
-              <div className={styles.traditionItem}>
-                <h3>Одежда из рыбьей кожи</h3>
-                <p>
-                  Из кеты, сазана, сома — легкая, водонепроницаемая, дышащая.
-                  Технология включала квашение, разминание и шитьё сухожильными
-                  нитями. К сожалению, утеряна к концу XX века.
-                </p>
-              </div>
-              <div className={styles.traditionItem}>
-                <h3>Экономика</h3>
-                <p>Охота, рыболовство, сбор женьшеня</p>
-              </div>
-              <div className={styles.traditionItem}>
-                <h3>Ремёсла</h3>
-                <p>Медицина (акупунктура, траволечение), выделка рыбьей кожи</p>
-              </div>
-              <div className={styles.traditionItem}>
-                <h3>Уникальная технология</h3>
-                <p>
-                  Кан — тёплая лежанка из кирпича или камня с внутренними
-                  дымоходами, занимавшая 2/3 площади комнаты. Топилась со
-                  стороны кухни.
-                </p>
-              </div>
+              <h2>{data.traditions.title}</h2>
+              {data.traditions.items.map((item, index) => (
+                <div key={index} className={styles.traditionItem}>
+                  <h3>{item.name}</h3>
+                  <p>{item.description}</p>
+                </div>
+              ))}
               <GallerySection nationId="tazy" section="trad" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.clothing}`}>
-              <h2>Одежда</h2>
+              <h2>{data.clothing.title}</h2>
               <div className={styles.clothingItem}>
-                <h3>Мужская</h3>
-                <p>
-                  Куртка (<em>тэжикэй</em>) длиной до колен с запахом справа
-                  налево (китайское влияние), халат из рыбьей кожи на лето,
-                  меховая куртка из оленьих шкур на зиму.
-                </p>
+                <h3>{data.clothing.male.title}</h3>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: data.clothing.male.description,
+                  }}
+                />
                 <GallerySection nationId="tazy" section="clothM" />
               </div>
               <div className={styles.clothingItem}>
-                <h3>Женская</h3>
-                <p>
-                  Халат (<em>пальто</em>) с широкими рукавами и вышивкой по
-                  подолу и вороту (растительный орнамент — цветы, листья,
-                  бабочки в китайском стиле), передник (<em>эри</em>), шёлковый
-                  платок или шапочка, расшитая бисером. Украшения: браслеты из
-                  серебра, бусы из нефрита, серьги-подвески.
-                </p>
+                <h3>{data.clothing.female.title}</h3>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: data.clothing.female.description,
+                  }}
+                />
                 <GallerySection nationId="tazy" section="clothF" />
               </div>
             </div>
 
             <div className={`${styles.contentBlock} ${styles.dwelling}`}>
-              <h2>Жилище</h2>
-              <div className={styles.dwellingItem}>
-                <h3>Зимнее</h3>
-                <p>
-                  Фанза — каркас из бревен, стены обмазаны глиной с навозом,
-                  крыша двускатная, крытая берестой или тесом.
-                </p>
-              </div>
-              <div className={styles.dwellingItem}>
-                <h3>Летнее</h3>
-                <p>
-                  Конический чум (<em>варас</em>) из жердей, покрытый
-                  берестяными полотнищами или тканью (при перекочевках по
-                  тайге).
-                </p>
-              </div>
-              <div className={styles.dwellingItem}>
-                <h3>Уникальные особенности</h3>
-                <p>
-                  Кан (тёплая лежанка с подогревом) — занимал 2/3 комнаты, на
-                  нём спали, сидели и ели.
-                </p>
-              </div>
-              <div className={styles.dwellingItem}>
-                <h3>Интерьер</h3>
-                <p>Кан, низкие столики, сундуки, ниши для утвари.</p>
-              </div>
+              <h2>{data.dwelling.title}</h2>
+              {data.dwelling.items.map((item, index) => (
+                <div key={index} className={styles.dwellingItem}>
+                  <h3>{item.title}</h3>
+                  <p dangerouslySetInnerHTML={{ __html: item.description }} />
+                </div>
+              ))}
               <GallerySection nationId="tazy" section="dwell" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.beliefs}`}>
-              <h2>Верования</h2>
-              <p>
-                Шаманизм с сильным влиянием народного даосизма и китайских
-                верований. Культ тигра (Амбы) — дух — хозяин тайги (
-                <em>taiga mafa</em>), убивать тигра без крайней нужды
-                запрещалось. Культ предков (подношения еды, водки, благовоний,
-                сжигание «бумажных денег» на могилах). Анимизм — духи гор, рек,
-                деревьев. Перед выходом в тайгу охотник «кормил» духов, бросая в
-                костер мясо или жир.
-              </p>
+              <h2>{data.beliefs.title}</h2>
+              <p dangerouslySetInnerHTML={{ __html: data.beliefs.content }} />
               <GallerySection nationId="tazy" section="belief" />
             </div>
 
@@ -245,42 +167,26 @@ export default function TazyPage() {
               <div className={styles.imageContainer}>
                 <img
                   src="/images/tazy/photo.svg"
-                  alt="Тазы — синкретичный народ Приморья"
+                  alt={`Тазы — синкретичный народ Приморья`}
                   className={styles.mediaImage}
                 />
               </div>
             </div>
 
             <div className={`${styles.contentBlock} ${styles.sources}`}>
-              <h2>Источники</h2>
+              <h2>{data.sources.title}</h2>
               <ul>
-                <li>
-                  <a
-                    href="https://sof0306.github.io/project/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Исходный проект «Культурный мост»
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://tochno.st/datasets/allsettlements"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Данные переписи 2020 года — tochno.st
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://atlaskmns.ru"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Атлас коренных малочисленных народов Севера
-                  </a>
-                </li>
+                {data.sources.items.map((source, index) => (
+                  <li key={index}>
+                    <a
+                      href={source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {source.text}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -290,10 +196,18 @@ export default function TazyPage() {
                   ← На главную
                 </Link>
                 <div className={styles.navArrows}>
-                  <Link href="/vod" className={styles.navArrow} title="Водь">
+                  <Link
+                    href={data.navigation.prev.link}
+                    className={styles.navArrow}
+                    title={data.navigation.prev.title}
+                  >
                     ←
                   </Link>
-                  <Link href="/oroki" className={styles.navArrow} title="Ороки">
+                  <Link
+                    href={data.navigation.next.link}
+                    className={styles.navArrow}
+                    title={data.navigation.next.title}
+                  >
                     →
                   </Link>
                 </div>

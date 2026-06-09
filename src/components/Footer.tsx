@@ -5,7 +5,7 @@ import anime from "animejs";
 import styles from "./Footer.module.scss";
 
 export default function Footer() {
-  const footerRef = useRef<HTMLFooterElement>(null);
+  const footerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     anime({

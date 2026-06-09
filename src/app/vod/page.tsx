@@ -6,10 +6,12 @@ import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import GallerySection from "@/components/GallerySection";
+import { getNationPageData } from "@/data/nationsPages";
 import styles from "./VodPage.module.scss";
 
 export default function VodPage() {
   const contentRef = useRef<HTMLDivElement>(null);
+  const data = getNationPageData("vod");
 
   useEffect(() => {
     anime({
@@ -22,33 +24,35 @@ export default function VodPage() {
     });
   }, []);
 
+  if (!data) return null;
+
   return (
     <>
       <Navigation />
       <main className={styles.page}>
         <div className={styles.container}>
           <div className={styles.header}>
-            <span className={styles.region}>Ленинградская область</span>
-            <h1 className={styles.title}>Водь</h1>
-            <p className={styles.native}>Vaďďa — «человек земли»</p>
-            <p className={styles.epigraph}>
-              Хранители Копорского чая и водских роз
-            </p>
+            <span className={styles.region}>{data.header.region}</span>
+            <h1 className={styles.title}>{data.header.title}</h1>
+            <p className={styles.native}>{data.header.native}</p>
+            <p className={styles.epigraph}>{data.header.epigraph}</p>
             <div className={styles.stats}>
               <div className={styles.statItem}>
                 <span className={styles.statLabel}>Численность (2020)</span>
-                <span className={styles.statValue}>99 чел.</span>
+                <span className={styles.statValue}>
+                  {data.header.stats.population}
+                </span>
               </div>
               <div className={styles.statItem}>
                 <span className={styles.statLabel}>Язык</span>
                 <span className={styles.statValue}>
-                  Водский (на грани исчезновения)
+                  {data.header.stats.language}
                 </span>
               </div>
               <div className={styles.statItem}>
                 <span className={styles.statLabel}>Верования</span>
                 <span className={styles.statValue}>
-                  Православие + духи природы
+                  {data.header.stats.belief}
                 </span>
               </div>
             </div>
@@ -56,39 +60,24 @@ export default function VodPage() {
 
           <div ref={contentRef} className={styles.content}>
             <div className={`${styles.contentBlock} ${styles.legend}`}>
-              <h2>Легенда народа</h2>
-              <p>
-                Водь (самоназвание — <em>vaďďa</em>, «человек земли» или «люди
-                земли») — один из древнейших коренных народов Ленинградской
-                области. Именно по имени этого народа получила название «Водская
-                пятина» — одна из пяти административных частей Новгородской
-                республики, упоминаемая в летописях с 1069 года. Легенды води
-                рассказывают о духах леса и воды, которым поклонялись их предки
-                задолго до прихода христианства. Сегодня этот народ стоит на
-                грани исчезновения, но продолжает бороться за свою идентичность.
-              </p>
+              <h2>{data.legend.title}</h2>
+              <p>{data.legend.content}</p>
             </div>
 
             <div className={`${styles.contentBlock} ${styles.geography}`}>
-              <h2>География проживания</h2>
+              <h2>{data.geography.title}</h2>
               <ul>
-                <li>
-                  <strong>Регионы:</strong> Ленинградская область
-                </li>
-                <li>
-                  <strong>Населённые пункты:</strong> Краколье (Йыгыпэря),
-                  Лужицы (Лууттса), Пиллово, Раяйоки
-                </li>
-                <li>
-                  <strong>Тип расселения:</strong> компактное (несколько
-                  деревень)
-                </li>
+                {data.geography.items.map((item, index) => (
+                  <li key={index}>
+                    <strong>{item.label}:</strong> {item.value}
+                  </li>
+                ))}
               </ul>
               <GallerySection nationId="vod" section="geog" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.population}`}>
-              <h2>Динамика численности</h2>
+              <h2>{data.population.title}</h2>
               <div className={styles.populationTable}>
                 <table>
                   <thead>
@@ -98,154 +87,79 @@ export default function VodPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>2010</td>
-                      <td>64 чел.</td>
-                    </tr>
-                    <tr>
-                      <td>2020</td>
-                      <td>99 чел.</td>
-                    </tr>
+                    {data.population.table.map((row, index) => (
+                      <tr key={index}>
+                        <td>{row.year}</td>
+                        <td>{row.value}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
               <p className={styles.populationComment}>
-                Численность води выросла на 35 человек. Это редкий пример
-                положительной демографической динамики среди
-                прибалтийско-финских народов России, достигнутый благодаря росту
-                национального самосознания и культурному возрождению.
+                {data.population.comment}
               </p>
             </div>
 
             <div className={`${styles.contentBlock} ${styles.language}`}>
-              <h2>Язык и современное положение</h2>
+              <h2>{data.language.title}</h2>
               <ul>
-                <li>
-                  <strong>Языковая семья:</strong> уральская семья,
-                  прибалтийско-финская ветвь
-                </li>
-                <li>
-                  <strong>Письменность:</strong> латиница (в научных записях)
-                </li>
-                <li>
-                  <strong>Статус ЮНЕСКО:</strong> на грани исчезновения
-                </li>
-                <li>
-                  <strong>Носители:</strong> 10–15 человек (все старше 75 лет)
-                </li>
-                <li>
-                  <strong>Современный язык:</strong> русский
-                </li>
-                <li>
-                  <strong>Меры поддержки:</strong> детский фольклорный ансамбль
-                  «Линнуд» («Птички») в Усть-Луге, летние языковые школы,
-                  издание грамматики (2015)
-                </li>
+                {data.language.items.map((item, index) => (
+                  <li key={index}>
+                    <strong>{item.label}:</strong> {item.value}
+                  </li>
+                ))}
               </ul>
               <GallerySection nationId="vod" section="lang" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.traditions}`}>
-              <h2>Традиции и ремёсла</h2>
-              <div className={styles.traditionItem}>
-                <h3>Копорский чай</h3>
-                <p>
-                  Иван-чай — водь первой начала его промышленную заготовку. В
-                  XVII–XVIII веках активно экспортировался в Европу, но
-                  английские купцы добились запрета на ввоз — один из первых
-                  случаев «чайной войны».
-                </p>
-              </div>
-              <div className={styles.traditionItem}>
-                <h3>Экономика</h3>
-                <p>Земледелие, рыболовство, отхожие промыслы</p>
-              </div>
-              <div className={styles.traditionItem}>
-                <h3>Ремёсла</h3>
-                <p>
-                  Льняное узорное ткачество с «водскими розами» (геометрические
-                  орнаменты с обереговым значением)
-                </p>
-              </div>
-              <div className={styles.traditionItem}>
-                <h3>Уникальная технология</h3>
-                <p>
-                  Паховая печь (без трубы) — дым выходил через окно в предбанник
-                </p>
-              </div>
+              <h2>{data.traditions.title}</h2>
+              {data.traditions.items.map((item, index) => (
+                <div key={index} className={styles.traditionItem}>
+                  <h3>{item.name}</h3>
+                  <p>{item.description}</p>
+                </div>
+              ))}
               <GallerySection nationId="vod" section="trad" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.clothing}`}>
-              <h2>Одежда</h2>
+              <h2>{data.clothing.title}</h2>
               <div className={styles.clothingItem}>
-                <h3>Мужская</h3>
-                <p>
-                  Длинная рубаха туникообразного кроя, штаны из небеленого
-                  холста, свита из серого или чёрного сукна.
-                </p>
+                <h3>{data.clothing.male.title}</h3>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: data.clothing.male.description,
+                  }}
+                />
                 <GallerySection nationId="vod" section="clothM" />
               </div>
               <div className={styles.clothingItem}>
-                <h3>Женская</h3>
-                <p>
-                  Нательная рубаха (<em>rätüsö</em>) с вышивкой, полосатая или
-                  клетчатая юбка (<em>hame</em>) чаще красная, передник (
-                  <em>essu</em>) из белого или цветного холста. Головной убор
-                  замужней женщины — <em>särkkä</em> (высокая шапка на
-                  берестяном каркасе) или <em>päähkine</em> (полотенчатый убор).
-                  Девушки носили венок (<em>värkä</em>) из цветов и лент.
-                  Нагрудное украшение — <em>rindaazõ</em> (массивная серебряная
-                  брошь).
-                </p>
+                <h3>{data.clothing.female.title}</h3>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: data.clothing.female.description,
+                  }}
+                />
                 <GallerySection nationId="vod" section="clothF" />
               </div>
             </div>
 
             <div className={`${styles.contentBlock} ${styles.dwelling}`}>
-              <h2>Жилище</h2>
-              <div className={styles.dwellingItem}>
-                <h3>Зимнее</h3>
-                <p>
-                  Бревенчатый дом (<em>perä</em>) по «финскому типу»: сени (
-                  <em>esihuone</em>), горница (<em>perä</em>), кухня (
-                  <em>kööki</em>).
-                </p>
-              </div>
-              <div className={styles.dwellingItem}>
-                <h3>Летнее</h3>
-                <p>Дом того же типа</p>
-              </div>
-              <div className={styles.dwellingItem}>
-                <h3>Уникальные особенности</h3>
-                <p>
-                  Паховая печь (без трубы), позже — русская печь с трубой.
-                  Отличались особой чистотой: белые холщовые занавески,
-                  домотканые половики.
-                </p>
-              </div>
-              <div className={styles.dwellingItem}>
-                <h3>Интерьер</h3>
-                <p>
-                  Лавки, покрытые половиками, печь, стол. Хозяйственные
-                  постройки: амбар (<em>ait</em>), рига (<em>rehi</em>) для
-                  сушки снопов, баня (<em>savu</em>), топившаяся «по-чёрному» до
-                  середины XX века.
-                </p>
-              </div>
+              <h2>{data.dwelling.title}</h2>
+              {data.dwelling.items.map((item, index) => (
+                <div key={index} className={styles.dwellingItem}>
+                  <h3>{item.title}</h3>
+                  <p dangerouslySetInnerHTML={{ __html: item.description }} />
+                </div>
+              ))}
               <GallerySection nationId="vod" section="dwell" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.beliefs}`}>
-              <h2>Верования</h2>
-              <p>
-                Православие (обращены в XVI веке) с сильными языческими
-                пережитками. Вера в хозяина леса (<em>metsäizä</em>), воды (
-                <em>veessäizä</em>), дома (<em>pereväizä</em>). Культ предков
-                (поминальные трапезы на кладбищах с киселём, блинами, яйцами).
-                Почитание священных камней-валунов («чудских камней») и
-                родников.
-              </p>
+              <h2>{data.beliefs.title}</h2>
+              <p dangerouslySetInnerHTML={{ __html: data.beliefs.content }} />
               <GallerySection nationId="vod" section="belief" />
             </div>
 
@@ -253,42 +167,26 @@ export default function VodPage() {
               <div className={styles.imageContainer}>
                 <img
                   src="/images/vod/photo.svg"
-                  alt="Водь — древнейший народ Ленинградской области"
+                  alt={`Водь — древнейший народ Ленинградской области`}
                   className={styles.mediaImage}
                 />
               </div>
             </div>
 
             <div className={`${styles.contentBlock} ${styles.sources}`}>
-              <h2>Источники</h2>
+              <h2>{data.sources.title}</h2>
               <ul>
-                <li>
-                  <a
-                    href="https://sof0306.github.io/project/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Исходный проект «Культурный мост»
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://tochno.st/datasets/allsettlements"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Данные переписи 2020 года — tochno.st
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://atlaskmns.ru"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Атлас коренных малочисленных народов Севера
-                  </a>
-                </li>
+                {data.sources.items.map((source, index) => (
+                  <li key={index}>
+                    <a
+                      href={source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {source.text}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -299,13 +197,17 @@ export default function VodPage() {
                 </Link>
                 <div className={styles.navArrows}>
                   <Link
-                    href="/chamalaly"
+                    href={data.navigation.prev.link}
                     className={styles.navArrow}
-                    title="Чамалалы"
+                    title={data.navigation.prev.title}
                   >
                     ←
                   </Link>
-                  <Link href="/tazy" className={styles.navArrow} title="Тазы">
+                  <Link
+                    href={data.navigation.next.link}
+                    className={styles.navArrow}
+                    title={data.navigation.next.title}
+                  >
                     →
                   </Link>
                 </div>
