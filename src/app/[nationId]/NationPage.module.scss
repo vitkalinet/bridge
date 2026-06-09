@@ -409,6 +409,22 @@
   }
 }
 
+.sidebarOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 997;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+  display: none;
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+}
+
 .sidebarHeader {
   padding: 80px 20px 20px;
   border-bottom: 1px solid var(--border);
@@ -589,15 +605,44 @@
     justify-content: center;
   }
 
-  .sidebar {
-    display: none;
+  .sidebarToggle {
+    display: flex;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    top: 90px;
+    transform: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+
+    &.open {
+      left: 10px;
+    }
   }
 
-  .sidebarToggle {
-    display: none;
+  .sidebar {
+    width: 0;
+    top: 0;
+  }
+
+  .sidebar.open {
+    width: 240px;
+  }
+
+  .sidebarHeader h3 {
+    font-size: 0.9rem;
+  }
+
+  .sidebarLink {
+    padding: 14px 20px;
+    font-size: 0.85rem;
   }
 
   .page {
     padding-left: 0 !important;
+  }
+
+  .sidebarOverlay {
+    display: block;
   }
 }

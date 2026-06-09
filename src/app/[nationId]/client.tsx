@@ -15,7 +15,7 @@ export default function NationPageClient() {
   const contentRef = useRef<HTMLDivElement>(null);
   const nationId = params.nationId as string;
   const data = getNationPageData(nationId);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("legend");
 
   useEffect(() => {
@@ -103,9 +103,16 @@ export default function NationPageClient() {
       <button
         className={`${styles.sidebarToggle} ${isSidebarOpen ? styles.open : ""}`}
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        aria-label="Меню разделов"
       >
-        {isSidebarOpen ? "◀" : "▶"}
+        {isSidebarOpen ? "✕" : "☰"}
       </button>
+      {isSidebarOpen && (
+        <div
+          className={styles.sidebarOverlay}
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       <aside
         className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ""}`}
       >
@@ -117,7 +124,12 @@ export default function NationPageClient() {
             <button
               key={section.id}
               className={`${styles.sidebarLink} ${activeSection === section.id ? styles.active : ""}`}
-              onClick={() => scrollToSection(section.id)}
+              onClick={() => {
+                scrollToSection(section.id);
+                if (window.innerWidth <= 768) {
+                  setIsSidebarOpen(false);
+                }
+              }}
             >
               {section.label}
             </button>
