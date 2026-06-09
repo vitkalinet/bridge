@@ -83,11 +83,15 @@
   opacity: 0;
 }
 
-.intro h2,
-.feature h2,
+.legend h2,
+.geography h2,
+.population h2,
+.language h2,
+.traditions h2,
+.clothing h2,
+.dwelling h2,
 .facts h2,
 .beliefs h2,
-.culture h2,
 .sources h2 {
   font-family: var(--font-unbounded), sans-serif;
   font-size: 1.8rem;
@@ -95,13 +99,184 @@
   margin: 0 0 1rem 0;
 }
 
-.intro p,
-.feature p,
-.beliefs p,
-.culture p {
+.legend p,
+.geography p,
+.population p,
+.language p,
+.traditions p,
+.clothing p,
+.dwelling p,
+.facts p,
+.beliefs p {
   font-size: 1.1rem;
   line-height: 1.7;
   color: var(--text);
+}
+
+.legend {
+  background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, rgba(34,139,34,0.1) 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  border-left: 4px solid var(--gold);
+}
+
+.geography ul {
+  list-style: none;
+  padding: 0;
+}
+
+.geography li {
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.geography li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+.population {
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.populationTable {
+  margin: 1.5rem 0;
+}
+
+.populationTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.populationTable th,
+.populationTable td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.populationTable th {
+  background: rgba(201,168,76,0.1);
+  color: var(--gold);
+  font-family: var(--font-unbounded), sans-serif;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.populationTable td {
+  color: var(--text);
+}
+
+.populationComment {
+  font-style: italic;
+  color: var(--text2);
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(34,139,34,0.05);
+  border-radius: 8px;
+  border-left: 3px solid var(--gold);
+}
+
+.language ul {
+  list-style: none;
+  padding: 0;
+}
+
+.language li {
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.language li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+.traditions {
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.traditionItem {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}
+
+.traditionItem h3 {
+  font-family: var(--font-geologica), sans-serif;
+  font-size: 1.2rem;
+  color: var(--gold);
+  margin: 0 0 0.5rem 0;
+}
+
+.clothing {
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.clothingItem {
+  margin-bottom: 1.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.clothingItem h3 {
+  font-family: var(--font-geologica), sans-serif;
+  font-size: 1.2rem;
+  color: var(--gold);
+  margin: 0 0 0.5rem 0;
+}
+
+.dwelling {
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.dwellingItem {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}
+
+.dwellingItem h3 {
+  font-family: var(--font-geologica), sans-serif;
+  font-size: 1.2rem;
+  color: var(--gold);
+  margin: 0 0 0.5rem 0;
+}
+
+.epigraph {
+  font-family: var(--font-cormorant), serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text2);
+  margin: 0.5rem 0 2rem 0;
 }
 
 .feature {

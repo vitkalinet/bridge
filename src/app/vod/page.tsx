@@ -5,6 +5,7 @@ import anime from "animejs";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import GallerySection from "@/components/GallerySection";
 import styles from "./VodPage.module.scss";
 
 export default function VodPage() {
@@ -30,14 +31,19 @@ export default function VodPage() {
             <span className={styles.region}>Ленинградская область</span>
             <h1 className={styles.title}>Водь</h1>
             <p className={styles.native}>Vaďďa — «человек земли»</p>
+            <p className={styles.epigraph}>
+              Хранители Копорского чая и водских роз
+            </p>
             <div className={styles.stats}>
               <div className={styles.statItem}>
-                <span className={styles.statLabel}>Численность (2021)</span>
-                <span className={styles.statValue}>477 чел.</span>
+                <span className={styles.statLabel}>Численность (2020)</span>
+                <span className={styles.statValue}>99 чел.</span>
               </div>
               <div className={styles.statItem}>
                 <span className={styles.statLabel}>Язык</span>
-                <span className={styles.statValue}>10–15 носителей</span>
+                <span className={styles.statValue}>
+                  Водский (на грани исчезновения)
+                </span>
               </div>
               <div className={styles.statItem}>
                 <span className={styles.statLabel}>Верования</span>
@@ -49,24 +55,198 @@ export default function VodPage() {
           </div>
 
           <div ref={contentRef} className={styles.content}>
-            <div className={`${styles.contentBlock} ${styles.intro}`}>
-              <h2>О народе</h2>
+            <div className={`${styles.contentBlock} ${styles.legend}`}>
+              <h2>Легенда народа</h2>
               <p>
-                Водь — древнейший народ Ленинградской области, давший имя
-                Водской пятине Новгородской республики. Их предки жили здесь ещё
-                до основания Новгорода. Живут преимущественно в Ивангородском
-                районе Ленинградской области.
+                Водь (самоназвание — <em>vaďďa</em>, «человек земли» или «люди
+                земли») — один из древнейших коренных народов Ленинградской
+                области. Именно по имени этого народа получила название «Водская
+                пятина» — одна из пяти административных частей Новгородской
+                республики, упоминаемая в летописях с 1069 года. Легенды води
+                рассказывают о духах леса и воды, которым поклонялись их предки
+                задолго до прихода христианства. Сегодня этот народ стоит на
+                грани исчезновения, но продолжает бороться за свою идентичность.
               </p>
             </div>
 
-            <div className={`${styles.contentBlock} ${styles.feature}`}>
-              <h2>Копорский чай — торговая война</h2>
-              <p>
-                Водь знаменита производством <strong>«Копорского чая»</strong>{" "}
-                (иван-чая), который экспортировали в Европу в XVII–XVIII веках.
-                Это вызвало настоящую торговую войну с Англией, так как русский
-                чай стал серьёзным конкурентом английскому импортному чаю.
+            <div className={`${styles.contentBlock} ${styles.geography}`}>
+              <h2>География проживания</h2>
+              <ul>
+                <li>
+                  <strong>Регионы:</strong> Ленинградская область
+                </li>
+                <li>
+                  <strong>Населённые пункты:</strong> Краколье (Йыгыпэря),
+                  Лужицы (Лууттса), Пиллово, Раяйоки
+                </li>
+                <li>
+                  <strong>Тип расселения:</strong> компактное (несколько
+                  деревень)
+                </li>
+              </ul>
+              <GallerySection nationId="vod" section="geog" />
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.population}`}>
+              <h2>Динамика численности</h2>
+              <div className={styles.populationTable}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Год</th>
+                      <th>Численность</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>2010</td>
+                      <td>64 чел.</td>
+                    </tr>
+                    <tr>
+                      <td>2020</td>
+                      <td>99 чел.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className={styles.populationComment}>
+                Численность води выросла на 35 человек. Это редкий пример
+                положительной демографической динамики среди
+                прибалтийско-финских народов России, достигнутый благодаря росту
+                национального самосознания и культурному возрождению.
               </p>
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.language}`}>
+              <h2>Язык и современное положение</h2>
+              <ul>
+                <li>
+                  <strong>Языковая семья:</strong> уральская семья,
+                  прибалтийско-финская ветвь
+                </li>
+                <li>
+                  <strong>Письменность:</strong> латиница (в научных записях)
+                </li>
+                <li>
+                  <strong>Статус ЮНЕСКО:</strong> на грани исчезновения
+                </li>
+                <li>
+                  <strong>Носители:</strong> 10–15 человек (все старше 75 лет)
+                </li>
+                <li>
+                  <strong>Современный язык:</strong> русский
+                </li>
+                <li>
+                  <strong>Меры поддержки:</strong> детский фольклорный ансамбль
+                  «Линнуд» («Птички») в Усть-Луге, летние языковые школы,
+                  издание грамматики (2015)
+                </li>
+              </ul>
+              <GallerySection nationId="vod" section="lang" />
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.traditions}`}>
+              <h2>Традиции и ремёсла</h2>
+              <div className={styles.traditionItem}>
+                <h3>Копорский чай</h3>
+                <p>
+                  Иван-чай — водь первой начала его промышленную заготовку. В
+                  XVII–XVIII веках активно экспортировался в Европу, но
+                  английские купцы добились запрета на ввоз — один из первых
+                  случаев «чайной войны».
+                </p>
+              </div>
+              <div className={styles.traditionItem}>
+                <h3>Экономика</h3>
+                <p>Земледелие, рыболовство, отхожие промыслы</p>
+              </div>
+              <div className={styles.traditionItem}>
+                <h3>Ремёсла</h3>
+                <p>
+                  Льняное узорное ткачество с «водскими розами» (геометрические
+                  орнаменты с обереговым значением)
+                </p>
+              </div>
+              <div className={styles.traditionItem}>
+                <h3>Уникальная технология</h3>
+                <p>
+                  Паховая печь (без трубы) — дым выходил через окно в предбанник
+                </p>
+              </div>
+              <GallerySection nationId="vod" section="trad" />
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.clothing}`}>
+              <h2>Одежда</h2>
+              <div className={styles.clothingItem}>
+                <h3>Мужская</h3>
+                <p>
+                  Длинная рубаха туникообразного кроя, штаны из небеленого
+                  холста, свита из серого или чёрного сукна.
+                </p>
+                <GallerySection nationId="vod" section="clothM" />
+              </div>
+              <div className={styles.clothingItem}>
+                <h3>Женская</h3>
+                <p>
+                  Нательная рубаха (<em>rätüsö</em>) с вышивкой, полосатая или
+                  клетчатая юбка (<em>hame</em>) чаще красная, передник (
+                  <em>essu</em>) из белого или цветного холста. Головной убор
+                  замужней женщины — <em>särkkä</em> (высокая шапка на
+                  берестяном каркасе) или <em>päähkine</em> (полотенчатый убор).
+                  Девушки носили венок (<em>värkä</em>) из цветов и лент.
+                  Нагрудное украшение — <em>rindaazõ</em> (массивная серебряная
+                  брошь).
+                </p>
+                <GallerySection nationId="vod" section="clothF" />
+              </div>
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.dwelling}`}>
+              <h2>Жилище</h2>
+              <div className={styles.dwellingItem}>
+                <h3>Зимнее</h3>
+                <p>
+                  Бревенчатый дом (<em>perä</em>) по «финскому типу»: сени (
+                  <em>esihuone</em>), горница (<em>perä</em>), кухня (
+                  <em>kööki</em>).
+                </p>
+              </div>
+              <div className={styles.dwellingItem}>
+                <h3>Летнее</h3>
+                <p>Дом того же типа</p>
+              </div>
+              <div className={styles.dwellingItem}>
+                <h3>Уникальные особенности</h3>
+                <p>
+                  Паховая печь (без трубы), позже — русская печь с трубой.
+                  Отличались особой чистотой: белые холщовые занавески,
+                  домотканые половики.
+                </p>
+              </div>
+              <div className={styles.dwellingItem}>
+                <h3>Интерьер</h3>
+                <p>
+                  Лавки, покрытые половиками, печь, стол. Хозяйственные
+                  постройки: амбар (<em>ait</em>), рига (<em>rehi</em>) для
+                  сушки снопов, баня (<em>savu</em>), топившаяся «по-чёрному» до
+                  середины XX века.
+                </p>
+              </div>
+              <GallerySection nationId="vod" section="dwell" />
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.beliefs}`}>
+              <h2>Верования</h2>
+              <p>
+                Православие (обращены в XVI веке) с сильными языческими
+                пережитками. Вера в хозяина леса (<em>metsäizä</em>), воды (
+                <em>veessäizä</em>), дома (<em>pereväizä</em>). Культ предков
+                (поминальные трапезы на кладбищах с киселём, блинами, яйцами).
+                Почитание священных камней-валунов («чудских камней») и
+                родников.
+              </p>
+              <GallerySection nationId="vod" section="belief" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.media}`}>
@@ -77,50 +257,6 @@ export default function VodPage() {
                   className={styles.mediaImage}
                 />
               </div>
-            </div>
-
-            <div className={`${styles.contentBlock} ${styles.facts}`}>
-              <h2>Ключевые факты</h2>
-              <ul>
-                <li>
-                  <strong>Копорский чай</strong> — производили и экспортировали
-                  в Европу, вызвав торговую войну с Англией
-                </li>
-                <li>
-                  <strong>10–15 носителей языка</strong>, все старше 75 лет.
-                  Водский язык относится к прибалтийско-финской ветви
-                </li>
-                <li>
-                  <strong>Священные камни-валуны</strong> считались местами
-                  силы, духи-хозяева леса, воды и дома занимали центральное
-                  место в верованиях
-                </li>
-                <li>
-                  <strong>Полосатая женская юбка</strong> и берестяная шапка
-                  «särkkä» — элементы традиционного костюма
-                </li>
-              </ul>
-            </div>
-
-            <div className={`${styles.contentBlock} ${styles.beliefs}`}>
-              <h2>Верования и духовная культура</h2>
-              <p>
-                Православие соединилось с верой в духов-хозяев леса, воды и
-                дома. Священные камни-валуны считались местами силы. После
-                христианизации сохранились обряды, сочетающие православные и
-                языческие элементы. Брёвенчатые жилища «финского типа» с паховой
-                печью без трубы — характерная черта водских поселений.
-              </p>
-            </div>
-
-            <div className={`${styles.contentBlock} ${styles.culture}`}>
-              <h2>Материальная культура</h2>
-              <p>
-                Женская одежда включала полосатую юбку, передник и берестяную
-                шапку «särkkä». Мужчины носили лапти с косой решёткой. Жилища
-                строились по «финскому типу» с паховой печью — без трубы, с
-                дымом, выходившим через дверь или специальное отверстие.
-              </p>
             </div>
 
             <div className={`${styles.contentBlock} ${styles.sources}`}>
@@ -141,7 +277,7 @@ export default function VodPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Данные переписи 2021 года — tochno.st
+                    Данные переписи 2020 года — tochno.st
                   </a>
                 </li>
                 <li>

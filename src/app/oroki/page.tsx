@@ -5,6 +5,7 @@ import anime from "animejs";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import GallerySection from "@/components/GallerySection";
 import styles from "./OrokiPage.module.scss";
 
 export default function OrokiPage() {
@@ -27,18 +28,21 @@ export default function OrokiPage() {
       <main className={styles.page}>
         <div className={styles.container}>
           <div className={styles.header}>
-            <span className={styles.region}>Сахалинская область</span>
+            <span className={styles.region}>
+              Сахалинская область, Хабаровский край
+            </span>
             <h1 className={styles.title}>Ороки (Ульта)</h1>
             <p className={styles.native}>Ульта — «олений народ»</p>
+            <p className={styles.epigraph}>Люди с поющими халатами</p>
             <div className={styles.stats}>
               <div className={styles.statItem}>
-                <span className={styles.statLabel}>Численность (2021)</span>
-                <span className={styles.statValue}>2498 чел.</span>
+                <span className={styles.statLabel}>Численность (2020)</span>
+                <span className={styles.statValue}>268 чел.</span>
               </div>
               <div className={styles.statItem}>
                 <span className={styles.statLabel}>Язык</span>
                 <span className={styles.statValue}>
-                  10–15 активных носителей
+                  Орочской (под серьёзной угрозой)
                 </span>
               </div>
               <div className={styles.statItem}>
@@ -51,24 +55,203 @@ export default function OrokiPage() {
           </div>
 
           <div ref={contentRef} className={styles.content}>
-            <div className={`${styles.contentBlock} ${styles.intro}`}>
-              <h2>О народе</h2>
+            <div className={`${styles.contentBlock} ${styles.legend}`}>
+              <h2>Легенда народа</h2>
               <p>
-                Ороки (Ульта) — коренной народ Сахалина. Их самоназвание «ульта»
-                означает «олений человек». Проживают преимущественно в
-                Ногликском и Охинском районах Сахалинской области.
+                Ороки (самоназвание — <em>ульта</em>, «олений народ») — один из
+                малочисленных коренных народов Сахалина и Хабаровского края.
+                Легенды ороков повествуют о том, как предки-тунгусы приручили
+                дикого оленя и последовали за ним на остров Сахалин, где и
+                остались жить. Удивительно, но у этого народа существует более
+                20 самоназваний — рекорд среди малых народов России:{" "}
+                <em>улта, орочун, орок, орочен, орочэн, уильта, орокил</em> и
+                другие. Это связано с дробной родовой структурой и длительной
+                изоляцией групп друг от друга.
               </p>
             </div>
 
-            <div className={`${styles.contentBlock} ${styles.feature}`}>
-              <h2>Рекордсмены по самоназваниям</h2>
-              <p>
-                Ороки имеют <strong>более 20 самоназваний</strong> — абсолютный
-                рекорд среди малых народов. Ульта, улта, орочун, орокил… Каждое
-                название отражало связь с определённой территорией или родом.
-                Хранители уникального медвежьего праздника «чопо» и традиции
-                «звучащей» одежды.
+            <div className={`${styles.contentBlock} ${styles.geography}`}>
+              <h2>География проживания</h2>
+              <ul>
+                <li>
+                  <strong>Регионы:</strong> Сахалинская область, Хабаровский
+                  край
+                </li>
+                <li>
+                  <strong>Населённые пункты:</strong> Вал, Ноглики, Венское,
+                  Усть-Ургал
+                </li>
+                <li>
+                  <strong>Тип расселения:</strong> кочевое (оленеводство)
+                </li>
+              </ul>
+              <GallerySection nationId="oroki" section="geog" />
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.population}`}>
+              <h2>Динамика численности</h2>
+              <div className={styles.populationTable}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Год</th>
+                      <th>Численность</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>2010</td>
+                      <td>295 чел.</td>
+                    </tr>
+                    <tr>
+                      <td>2020</td>
+                      <td>268 чел.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className={styles.populationComment}>
+                Численность ороков сократилась на 27 человек. Несмотря на меры
+                государственной поддержки, народ продолжает медленно убывать.
+                Основные причины — урбанизация, смешанные браки и переход на
+                русский язык.
               </p>
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.language}`}>
+              <h2>Язык и современное положение</h2>
+              <ul>
+                <li>
+                  <strong>Языковая семья:</strong> тунгусо-маньчжурская группа,
+                  южная ветвь
+                </li>
+                <li>
+                  <strong>Письменность:</strong> кириллица (разработана в
+                  2000-е, распространения не получила)
+                </li>
+                <li>
+                  <strong>Статус ЮНЕСКО:</strong> под серьёзной угрозой
+                </li>
+                <li>
+                  <strong>Носители:</strong> 10–15 человек (все старше 60 лет)
+                </li>
+                <li>
+                  <strong>Современный язык:</strong> русский
+                </li>
+                <li>
+                  <strong>Меры поддержки:</strong> языковые кружки в местах
+                  компактного проживания, учебные пособия
+                </li>
+              </ul>
+              <GallerySection nationId="oroki" section="lang" />
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.traditions}`}>
+              <h2>Традиции и ремёсла</h2>
+              <div className={styles.traditionItem}>
+                <h3>«Поющие» женские халаты</h3>
+                <p>
+                  На одежду нашивались металлические подвески, кольца, пластины
+                  из кованой меди, бубенчики, монеты. При ходьбе украшения
+                  издавали мелодичный звон, отпугивавший злых духов. Каждый шаг
+                  создавал уникальный «музыкальный узор».
+                </p>
+              </div>
+              <div className={styles.traditionItem}>
+                <h3>Экономика</h3>
+                <p>
+                  Оленеводство (вьючные и верховые олени), охота, рыболовство
+                </p>
+              </div>
+              <div className={styles.traditionItem}>
+                <h3>Ремёсла</h3>
+                <p>
+                  Изготовление меховой одежды, украшение бисером, резьба по
+                  дереву
+                </p>
+              </div>
+              <div className={styles.traditionItem}>
+                <h3>Уникальная технология</h3>
+                <p>
+                  Медвежий праздник (<em>чопо</em> / <em>сёпо</em>) — сложный
+                  2–3-летний ритуальный цикл с выкармливанием медвежонка,
+                  жертвоприношением и ритуальной трапезой
+                </p>
+              </div>
+              <GallerySection nationId="oroki" section="trad" />
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.clothing}`}>
+              <h2>Одежда</h2>
+              <div className={styles.clothingItem}>
+                <h3>Мужская</h3>
+                <p>
+                  Нательная рубаха из ткани или ровдуги, ноговицы (штаны) из
+                  оленьей шкуры, халат из оленьего меха или ткани (
+                  <em>тэтэу</em>), пояс с ножом и огнивом, меховая шапка-ушанка.
+                </p>
+                <GallerySection nationId="oroki" section="clothM" />
+              </div>
+              <div className={styles.clothingItem}>
+                <h3>Женская</h3>
+                <p>
+                  Халат с металлическими подвесками по подолу и рукавам («поющий
+                  халат»), нагрудник (<em>сэлэ</em> / <em>туэ</em>), расшитый
+                  бисером, пояс с колокольчиками и монетами, головной убор —
+                  шапочка из оленьего лба с ушами и рогами (ритуальная). Обувь —
+                  унты из оленьего камуса мехом наружу, подошва из шкуры лахтака
+                  (морского зайца).
+                </p>
+                <GallerySection nationId="oroki" section="clothF" />
+              </div>
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.dwelling}`}>
+              <h2>Жилище</h2>
+              <div className={styles.dwellingItem}>
+                <h3>Зимнее</h3>
+                <p>
+                  <em>Варас</em> / <em>уилта-дю</em> — полуземлянка глубиной
+                  0,5–1 м, стены из бревен или жердей, обмазанные глиной, крыша
+                  двускатная из бревен с дерном и землёй. Вход через узкий
+                  туннель-коридор.
+                </p>
+              </div>
+              <div className={styles.dwellingItem}>
+                <h3>Летнее</h3>
+                <p>
+                  Чум-варас — конический чум из жердей, покрытый оленьими
+                  шкурами (зимой) или берестой (летом).
+                </p>
+              </div>
+              <div className={styles.dwellingItem}>
+                <h3>Уникальные особенности</h3>
+                <p>
+                  Свайные амбары («лабазы») на высоких ножках для хранения мяса
+                  и рыбы.
+                </p>
+              </div>
+              <div className={styles.dwellingItem}>
+                <h3>Интерьер</h3>
+                <p>
+                  Очаг в центре, нары вдоль стен, место для хранения утвари.
+                </p>
+              </div>
+              <GallerySection nationId="oroki" section="dwell" />
+            </div>
+
+            <div className={`${styles.contentBlock} ${styles.beliefs}`}>
+              <h2>Верования</h2>
+              <p>
+                Шаманизм со сложной космологией (верхний, средний, нижний миры).
+                Шаманы (<em>саман</em> / <em>кояма</em>) путешествовали между
+                мирами, лечили, предсказывали. Культ медведя (священный зверь,
+                превратившийся из человека или небесный посланец). Культ оленя
+                (особенно белых оленей — спутников духов). Анимизм: духи-хозяева
+                тайги, гор, рек, озёр. Культ предков (души предков помогают
+                живым).
+              </p>
+              <GallerySection nationId="oroki" section="belief" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.media}`}>
@@ -79,50 +262,6 @@ export default function OrokiPage() {
                   className={styles.mediaImage}
                 />
               </div>
-            </div>
-
-            <div className={`${styles.contentBlock} ${styles.facts}`}>
-              <h2>Ключевые факты</h2>
-              <ul>
-                <li>
-                  <strong>Более 20 самоназваний</strong> — абсолютный рекорд
-                  среди малых народов России
-                </li>
-                <li>
-                  <strong>Медвежий праздник «чопо»</strong> — центральный ритуал
-                  культуры, длился 2–3 дня
-                </li>
-                <li>
-                  <strong>Музыкальная одежда</strong> — женские халаты с
-                  подвесками, кольцами, монетами звенели как оберег при ходьбе
-                </li>
-                <li>
-                  <strong>Полуземлянка «уилта-дю»</strong> (зима) и чум «варас»
-                  (лето) — традиционные жилища
-                </li>
-              </ul>
-            </div>
-
-            <div className={`${styles.contentBlock} ${styles.beliefs}`}>
-              <h2>Верования и духовная культура</h2>
-              <p>
-                Шаманизм с культом медведя — священного посланника между мирами.
-                Медведь считался хозяином тайги, послом верхнего мира среди
-                людей. Медвежий праздник «чопо» длился 2–3 дня и включал сложные
-                ритуалы проводов духа медведя обратно в горы. Культ оленя как
-                священного животного также занимал важное место в верованиях
-                ороков.
-              </p>
-            </div>
-
-            <div className={`${styles.contentBlock} ${styles.culture}`}>
-              <h2>Материальная культура</h2>
-              <p>
-                Женские халаты с подвесками из колец и монет звенели как музыка
-                при ходьбе — это считалось оберегом от злых духов. В
-                совершенстве владели искусством оленеводства, что было основой
-                их хозяйства и образа жизни.
-              </p>
             </div>
 
             <div className={`${styles.contentBlock} ${styles.sources}`}>
@@ -143,7 +282,7 @@ export default function OrokiPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Данные переписи 2021 года — tochno.st
+                    Данные переписи 2020 года — tochno.st
                   </a>
                 </li>
                 <li>
