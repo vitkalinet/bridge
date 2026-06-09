@@ -62,8 +62,41 @@ export interface NationPageData {
   };
 }
 
+export interface NationCardData {
+  id: string;
+  name: string;
+  nativeName: string;
+  region: string;
+  population: string;
+  epigraph: string;
+  gradient: string;
+}
+
 export const nationsPages = nationsPagesData as Record<string, NationPageData>;
 
 export const getNationPageData = (id: string): NationPageData | undefined => {
   return nationsPages[id];
+};
+
+export const getAllNations = (): NationCardData[] => {
+  return Object.entries(nationsPagesData).map(([id, data]) => ({
+    id,
+    name: data.header.title,
+    nativeName: data.header.native,
+    region: data.header.region,
+    population: data.header.stats.population,
+    epigraph: data.header.epigraph,
+    gradient: getGradientForNation(id),
+  }));
+};
+
+const getGradientForNation = (id: string): string => {
+  const gradients: Record<string, string> = {
+    kereki: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    chamalaly: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    vod: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+    tazy: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    oroki: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+  };
+  return gradients[id] || "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
 };

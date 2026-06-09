@@ -1,17 +1,20 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useParams } from "next/navigation";
 import anime from "animejs";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import GallerySection from "@/components/GallerySection";
 import { getNationPageData } from "@/data/nationsPages";
-import styles from "./ChamalalyPage.module.scss";
+import styles from "./NationPage.module.scss";
 
-export default function ChamalalyPage() {
+export default function NationPage() {
+  const params = useParams();
   const contentRef = useRef<HTMLDivElement>(null);
-  const data = getNationPageData("chamalaly");
+  const nationId = params.nationId as string;
+  const data = getNationPageData(nationId);
 
   useEffect(() => {
     anime({
@@ -24,7 +27,29 @@ export default function ChamalalyPage() {
     });
   }, []);
 
-  if (!data) return null;
+  if (!data) {
+    return (
+      <>
+        <Navigation />
+        <main className={styles.page}>
+          <div className={styles.container}>
+            <div className={styles.error}>
+              <h1>Народ не найден</h1>
+              <Link href="/" className={styles.homeLink}>
+                ← Вернуться на главную
+              </Link>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  const hasContent = (field: string): boolean => {
+    const value = (data.clothing as any)[field];
+    return value && value.description && value.description.trim() !== "";
+  };
 
   return (
     <>
@@ -73,7 +98,7 @@ export default function ChamalalyPage() {
                   </li>
                 ))}
               </ul>
-              <GallerySection nationId="chamalaly" section="geog" />
+              <GallerySection nationId={nationId} section="geog" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.population}`}>
@@ -110,7 +135,7 @@ export default function ChamalalyPage() {
                   </li>
                 ))}
               </ul>
-              <GallerySection nationId="chamalaly" section="lang" />
+              <GallerySection nationId={nationId} section="lang" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.traditions}`}>
@@ -121,21 +146,33 @@ export default function ChamalalyPage() {
                   <p>{item.description}</p>
                 </div>
               ))}
-              <GallerySection nationId="chamalaly" section="trad" />
+              <GallerySection nationId={nationId} section="trad" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.clothing}`}>
               <h2>{data.clothing.title}</h2>
-              <div className={styles.clothingItem}>
-                <h3>{data.clothing.male.title}</h3>
-                <p>{data.clothing.male.description}</p>
-                <GallerySection nationId="chamalaly" section="clothM" />
-              </div>
-              <div className={styles.clothingItem}>
-                <h3>{data.clothing.female.title}</h3>
-                <p>{data.clothing.female.description}</p>
-                <GallerySection nationId="chamalaly" section="clothF" />
-              </div>
+              {hasContent("male") && (
+                <div className={styles.clothingItem}>
+                  <h3>{data.clothing.male.title}</h3>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: data.clothing.male.description,
+                    }}
+                  />
+                  <GallerySection nationId={nationId} section="clothM" />
+                </div>
+              )}
+              {hasContent("female") && (
+                <div className={styles.clothingItem}>
+                  <h3>{data.clothing.female.title}</h3>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: data.clothing.female.description,
+                    }}
+                  />
+                  <GallerySection nationId={nationId} section="clothF" />
+                </div>
+              )}
             </div>
 
             <div className={`${styles.contentBlock} ${styles.dwelling}`}>
@@ -143,23 +180,23 @@ export default function ChamalalyPage() {
               {data.dwelling.items.map((item, index) => (
                 <div key={index} className={styles.dwellingItem}>
                   <h3>{item.title}</h3>
-                  <p>{item.description}</p>
+                  <p dangerouslySetInnerHTML={{ __html: item.description }} />
                 </div>
               ))}
-              <GallerySection nationId="chamalaly" section="dwell" />
+              <GallerySection nationId={nationId} section="dwell" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.beliefs}`}>
               <h2>{data.beliefs.title}</h2>
-              <p>{data.beliefs.content}</p>
-              <GallerySection nationId="chamalaly" section="belief" />
+              <p dangerouslySetInnerHTML={{ __html: data.beliefs.content }} />
+              <GallerySection nationId={nationId} section="belief" />
             </div>
 
             <div className={`${styles.contentBlock} ${styles.media}`}>
               <div className={styles.imageContainer}>
                 <img
-                  src="/images/chamalaly/photo.svg"
-                  alt={`Чамалалы — горные люди Кавказа`}
+                  src={`/images/${nationId}/photo.svg`}
+                  alt={`${data.header.title} — ${data.header.epigraph}`}
                   className={styles.mediaImage}
                 />
               </div>
