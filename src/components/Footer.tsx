@@ -32,13 +32,6 @@ export default function Footer() {
           Связаться с нами
         </a>
         <a
-          href="https://sof0306.github.io/project/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Исходный проект
-        </a>
-        <a
           href="https://atlaskmns.ru"
           target="_blank"
           rel="noopener noreferrer"

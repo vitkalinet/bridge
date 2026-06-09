@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import anime from "animejs";
 import Link from "next/link";
-import { getAllNations } from "@/data/nationsPages";
+import { getAllNations, getNationPageData } from "@/data/nationsPages";
 import styles from "./PeopleCards.module.scss";
 
 interface Person {
@@ -17,28 +17,28 @@ interface Person {
   belief: string;
   photo: string;
   description: string;
-  facts: string[];
-  beliefs: string;
-  atlasUrl: string;
   link: string;
 }
 
-const peoples: Person[] = getAllNations().map((nation) => ({
-  id: nation.id,
-  region: nation.region.split(",")[0], // Берём только первый регион
-  name: nation.name,
-  native: nation.nativeName,
-  tagline: nation.epigraph,
-  population: nation.population,
-  language: "См. страницу народа",
-  belief: "См. страницу народа",
-  photo: `/images/${nation.id}/${nation.id}.jpg`,
-  description: nation.epigraph,
-  facts: [],
-  beliefs: "",
-  atlasUrl: "",
-  link: `/${nation.id}`,
-}));
+const peoples: Person[] = getAllNations().map((nation) => {
+  const pageData = getNationPageData(nation.id);
+  const language = pageData?.header.stats.language || "См. страницу народа";
+  const belief = pageData?.header.stats.belief || "См. страницу народа";
+
+  return {
+    id: nation.id,
+    region: nation.region.split(",")[0],
+    name: nation.name,
+    native: nation.nativeName,
+    tagline: nation.epigraph,
+    population: nation.population,
+    language,
+    belief,
+    photo: `/images/${nation.id}/${nation.id}.jpg`,
+    description: nation.epigraph,
+    link: `/${nation.id}`,
+  };
+});
 
 export default function PeopleCards() {
   const cardsRef = useRef<HTMLDivElement>(null);
